@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
     links.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const targetId = this.getAttribute('href');
+            const target = document.querySelector(targetId);
             if (target) {
                 target.scrollIntoView({
                     behavior: 'smooth',
@@ -112,6 +113,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 200);
     }, 3000);
 
+    // Add special effects for individual sections
+    const discordSection = document.querySelector('.discord-section');
+    const youtubeSection = document.querySelector('.youtube-section');
+    
+    [discordSection, youtubeSection].forEach((section, index) => {
+        if (section) {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(50px)';
+            section.style.transition = 'opacity 1s ease, transform 1s ease';
+            
+            setTimeout(() => {
+                section.style.opacity = '1';
+                section.style.transform = 'translateY(0)';
+            }, (index + 3) * 300); // Start after other sections
+        }
+    });
+
     // Add click tracking for social links (for analytics if needed)
     socialLinks.forEach(link => {
         link.addEventListener('click', function() {
@@ -129,16 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (hero) {
             hero.style.transform = `translateY(${rate}px)`;
         }
-        
-        // Add rotation effect to skills on scroll
-        const skillItems = document.querySelectorAll('.skill-item');
-        skillItems.forEach((item, index) => {
-            const rect = item.getBoundingClientRect();
-            const rotation = (scrolled * 0.05 + index * 10) % 360;
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-                item.style.transform += ` rotate(${rotation * 0.1}deg)`;
-            }
-        });
     });
 
     // Add loading animation with cosmic theme
@@ -165,7 +173,7 @@ function createCosmicParticles() {
             position: fixed;
             width: ${Math.random() * 4 + 2}px;
             height: ${Math.random() * 4 + 2}px;
-            background: ${['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffd93d'][Math.floor(Math.random() * 5)]};
+            background: ${['#1976d2', '#42a5f5', '#64b5f6', '#90caf9', '#bbdefb'][Math.floor(Math.random() * 5)]};
             border-radius: 50%;
             pointer-events: none;
             z-index: -1;
@@ -212,13 +220,13 @@ function showCosmicWelcome() {
         position: fixed;
         top: 20px;
         right: 20px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #1976d2, #1565c0);
         color: white;
         padding: 15px 25px;
         border-radius: 25px;
         font-size: 1rem;
         z-index: 9999;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        box-shadow: 0 10px 25px rgba(25,118,210,0.3);
         animation: slideInRight 0.8s ease-out;
         border: 2px solid rgba(255,255,255,0.3);
     `;
@@ -291,7 +299,7 @@ function showEasterEgg() {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: linear-gradient(135deg, #667eea, #764ba2, #ff6b6b);
+        background: linear-gradient(135deg, #1976d2, #1565c0, #42a5f5);
         background-size: 200% 200%;
         animation: gradientShift 2s ease infinite, cosmicBounce 0.8s ease-out;
         color: white;
@@ -299,7 +307,7 @@ function showEasterEgg() {
         border-radius: 20px;
         font-size: 1.3rem;
         z-index: 9999;
-        box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        box-shadow: 0 25px 50px rgba(25,118,210,0.4);
         border: 3px solid rgba(255,255,255,0.5);
         text-align: center;
         max-width: 400px;
